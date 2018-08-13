@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "mysqladminID": {
+            "value": "wpsqladmin"
+        },
+        "mysqladminPW": {
+            "value": "Pa55w0rd"
+        },
+        "skuCapacityDTU": {
+            "value": 50
+        },
+        "skuName": {
+            "value": "MYSQLB100"
+        },
+        "skuSizeMB": {
+            "value": 51200
+        },
+        "skuTier": {
+            "value": "Basic"
+        },
+        "version": {
+            "value": "5.7"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_F1s"
+        },
+        "adminUsername": {
+            "value": "wpadmin"
+        },
+        "diskSizeGB": {
+            "value": "30"
+        },
+        "adminPublicKey": {
+            "value": "---- BEGIN SSH2 PUBLIC KEY ----\nComment: \"rsa-key-20180221\"\nAAAAB3NzaC1yc2EAAAABJQAAAQEAury/6uRwkvPPYk3Pefl++t20H+q5eX+KwuhE\nSbtJElh42u1HmYppL0yAlVmkcv8NH+uwliy4aDCM2kYaqtWgOuNa6UhBQhCS9W3O\nskPdC5XdXC26vNyBY3t2pLRGg6qhD9XwQodri8P1mBntRLfjyj7BdLGtEGFDrszG\nau6qcHJg96Gt9r7DRt0Eze3qOpIDxj74k59QMYMLM4OttWCHM9l6lXLWjeB3Oh21\n7vmu8YTVotvmJ8RwP/9PX1Djt607guEKben8Cg6MdBubyUnRCztyW/rFj3sMy8ki\nJoJCxnhlbMDd4FdCTXSj+r1wFvYj3AIs0IYouY+B18tcnWWeUQ==\n---- END SSH2 PUBLIC KEY ----"
+        },
+        "addressPrefix": {
+            "value": "10.0.0.0/24"
+        },
+        "subnetPrefix": {
+            "value": "10.0.0.0/24"
+        },
+        "publicIpAddressType": {
+            "value": "Dynamic"
+        }
+    }
+}
