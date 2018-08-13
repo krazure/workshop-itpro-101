@@ -48,8 +48,8 @@ service apache2 restart
 
 # Docker init
 cd ~
-curl -O https://raw.githubusercontent.com/krazure/hands-on-lab/master/KCD2018_Docker_and_Azure/init/Dockerfile/Dockerfile
+curl -O https://raw.githubusercontent.com/krazure/workshop-itpro-101/master/source/Dockerfiles/wpinit/Dockerfile
 docker build -t wpinit .
 
 cd /var/www
-curl -O https://raw.githubusercontent.com/krazure/hands-on-lab/master/KCD2018_Docker_and_Azure/script/Dockerfile/Dockerfile
+curl -O https://raw.githubusercontent.com/krazure/workshop-itpro-101/master/source/Dockerfiles/wordpress/Dockerfile
