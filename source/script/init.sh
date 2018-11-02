@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Wordpress 초기화
+# Wordpress initial
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | tee /etc/apt/sources.list.d/azure-cli.list
 apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
 apt-get install apt-transport-https
@@ -14,7 +14,7 @@ a2enmod rewrite
 a2enmod php7.0
 apache2ctl configtest
 
-# Wordpress 다운로드 및 설정
+# Wordpress download and configure
 cd /tmp
 curl -O https://wordpress.org/latest.tar.gz
 tar xzvf latest.tar.gz
@@ -35,11 +35,10 @@ sed -i -e '88a\\define("DOMAIN_CURRENT_SITE", filter_input(INPUT_SERVER, "HTTP_H
 sed -i -e '89a\\' /tmp/wordpress/wp-config.php
 sed -i -e '90a\\' /tmp/wordpress/wp-config.php
 
-# Wordpress 복사
+# Wordpress cpoy
 rm -rf /var/www/html
 sudo cp -a /tmp/wordpress/. /var/www/html
 
-# Wordpress 권한 수정
 chown -R www-data:www-data /var/www/html
 chmod -R g+w /var/www/html
 
