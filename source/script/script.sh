@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Wordpress initial
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | tee /etc/apt/sources.list.d/azure-cli.list
-apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
-apt-get install apt-transport-https
-apt-get update
-apt-get install -y --allow-unauthenticated --no-install-recommends apache2 php php-curl php-gd php-mbstring php-mcrypt php-xml php-xmlrpc libapache2-mod-php php-mysql php-fpm php-json php-cgi docker.io azure-cli
+AZ_REPO=$(lsb_release -cs)
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install -y apt-transport-https azure-cli
+apt-get install -y --allow-unauthenticated --no-install-recommends apache2 php php-curl php-gd php-mbstring php-xml php-xmlrpc libapache2-mod-php php-mysql php-fpm php-json php-cgi docker.io
 sed -i -e '169a\\<Directory /var/www/html/>' /etc/apache2/apache2.conf
 sed -i -e '170a\\    AllowOverride All' /etc/apache2/apache2.conf
 sed -i -e '171a\\</Directory>' /etc/apache2/apache2.conf

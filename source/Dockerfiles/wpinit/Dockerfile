@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends apache2 php php-curl php-gd php-mbstring php-mcrypt php-xml php-xmlrpc libapache2-mod-php php-mysql php-fpm php-json php-cgi \
+	&& apt-get install -y --no-install-recommends apache2 php php-curl php-gd php-mbstring php-xml php-xmlrpc libapache2-mod-php php-mysql php-fpm php-json php-cgi \
 	&& sed -i -e '169a\\<Directory /var/www/html/>' /etc/apache2/apache2.conf \
 	&& sed -i -e '170a\\    AllowOverride All' /etc/apache2/apache2.conf \
 	&& sed -i -e '171a\\</Directory>' /etc/apache2/apache2.conf \
