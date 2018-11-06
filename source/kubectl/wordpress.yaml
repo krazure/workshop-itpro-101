@@ -1,9 +1,12 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
   template:
     metadata:
       labels:
@@ -12,17 +15,24 @@ spec:
       containers:
       - name: wordpress
         image: <acr-login-server>/wordpress
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
         ports:
         - containerPort: 80
+          name: wordpress
       imagePullSecrets:
-      - name: acr-auth
+        - name: acr-auth
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: wordpress
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
   selector:
