@@ -91,22 +91,22 @@
             "type":"Microsoft.DBforMySQL/servers",
             "resources":[
                 {
-                    "name":"anyopen",
-                    "type":"firewallRules",
-                    "apiVersion":"2017-04-30-preview",
+                    "name":"subnet_endpoint",
+                    "type":"virtualNetworkRules",
+                    "apiVersion":"2017-12-01",
                     "dependsOn":[  
-                        "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]"
+                        "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]",
+                        "[concat('Microsoft.Network/virtualNetworks/', variables('subnetName')]"
                     ],
                     "location":"[resourceGroup().location]",
                     "properties":{  
-                        "startIpAddress":"0.0.0.0",
-                        "endIpAddress":"255.255.255.255"
+                        "virtualNetworkSubnetId": "[concat('Microsoft.Network/virtualNetworks/', variables('subnetName')]"
                     }
                 },
                 {  
                     "name":"wpdatabase",
                     "type":"databases",
-                    "apiVersion":"2017-04-30-preview",
+                    "apiVersion":"2017-12-01",
                     "dependsOn":[  
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]"
                     ],
@@ -130,7 +130,7 @@
                     "computerName": "[variables('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "linuxConfiguration": {
-                        "disablePasswordAuthentication": "true",
+                        "disablePasswordAuthentication": true,
                         "ssh": {
                             "publicKeys": [
                                 {
@@ -152,7 +152,7 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "createOption": "fromImage",
+                        "createOption": "FromImage",
                         "diskSizeGB": "[parameters('diskSizeGB')]",
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS"
@@ -243,11 +243,11 @@
         },
         {
             "name": "[variables('publicIpAddressName')]",
-            "type": "Microsoft.Network/publicIpAddresses",
+            "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2017-08-01",
             "location": "[resourceGroup().location]",
             "properties": {
-                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+                "publicIPAllocationMethod": "[parameters('publicIpAddressType')]"
             },
             "sku": {
                 "name": "Basic"
@@ -264,7 +264,7 @@
                         "name": "default-allow-ssh",
                         "properties": {
                             "priority": 1000,
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "access": "Allow",
                             "direction": "Inbound",
                             "sourceAddressPrefix": "*",
@@ -277,7 +277,7 @@
                         "name": "default-allow-http",
                         "properties": {
                             "priority": 1100,
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "access": "Allow",
                             "direction": "Inbound",
                             "sourceAddressPrefix": "*",
@@ -290,7 +290,7 @@
                         "name": "default-allow-docker",
                         "properties": {
                             "priority": 1200,
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "access": "Allow",
                             "direction": "Inbound",
                             "sourceAddressPrefix": "*",
