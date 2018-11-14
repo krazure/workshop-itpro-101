@@ -96,11 +96,11 @@
                     "apiVersion":"2017-12-01",
                     "dependsOn":[  
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]",
-                        "[concat('Microsoft.Network/virtualNetworks/', variables('subnetName')]"
+                        "[variables('subnetRef')]"
                     ],
                     "location":"[resourceGroup().location]",
                     "properties":{  
-                        "virtualNetworkSubnetId": "[concat('Microsoft.Network/virtualNetworks/', variables('subnetName')]"
+                        "virtualNetworkSubnetId": "[variables('subnetRef')]"
                     }
                 },
                 {  
