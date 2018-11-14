@@ -11,12 +11,12 @@
             "maxLength":128,
             "type": "securestring"
         },
-        "skuCapacityDTU": {
+        "skuCapacity": {
             "defaultValue":50,
             "type": "int"
         },
         "skuName": {
-            "defaultValue":"MYSQLB100",
+            "defaultValue":"B_Gen5_2",
             "type": "string"
         },
         "skuSizeMB": {
@@ -67,23 +67,26 @@
     },
     "resources": [
         {
-            "apiVersion": "2017-04-30-preview",
-            "kind": "",
+            "apiVersion": "2017-12-01",
             "location": "[resourceGroup().location]",
             "name": "[variables('serverName')]",
             "properties": {
                 "version": "[parameters('version')]",
                 "administratorLogin": "[parameters('mysqladminID')]",
                 "administratorLoginPassword": "[parameters('mysqladminPW')]",
-                "storageMB": "[parameters('skuSizeMB')]",
-                "sslEnforcement": "Disabled"
+                "storageProfile": {
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Disabled",
+                    "storageMB": "[parameters('skuSizeMB')]"
+                },
+                "sslEnforcement": "Enabled",
+                "createMode": "Default"
             },
             "sku": {
                 "name": "[parameters('skuName')]",
                 "tier": "[parameters('skuTier')]",
-                "capacity": "[parameters('skuCapacityDTU')]",
-                "size": "[parameters('skuSizeMB')]",
-                "family": "SkuFamily"
+                "capacity": "[parameters('skuCapacity')]",
+                "family": "Gen4"
             },
             "type":"Microsoft.DBforMySQL/servers",
             "resources":[

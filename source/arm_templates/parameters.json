@@ -8,11 +8,11 @@
         "mysqladminPW": {
             "value": "Pa55w0rd"
         },
-        "skuCapacityDTU": {
+        "skuCapacity": {
             "value": 50
         },
         "skuName": {
-            "value": "MYSQLB100"
+            "value": "B_Gen5_2"
         },
         "skuSizeMB": {
             "value": 51200
