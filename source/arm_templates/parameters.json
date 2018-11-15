@@ -6,19 +6,16 @@
             "value": "wpsqladmin"
         },
         "mysqladminPW": {
-            "value": "Pa55w0rd"
-        },
-        "skuCapacity": {
-            "value": 50
+            "value": "Passw.rd"
         },
         "skuName": {
-            "value": "B_Gen5_2"
+            "value": "GP_Gen5_2"
         },
         "skuSizeMB": {
             "value": 51200
         },
         "skuTier": {
-            "value": "Basic"
+            "value": "GeneralPurpose"
         },
         "version": {
             "value": "5.7"
