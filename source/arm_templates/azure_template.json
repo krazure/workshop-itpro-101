@@ -116,7 +116,7 @@
         {
             "name": "[variables('virtualMachineName')]",
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2016-04-30-preview",
+            "apiVersion": "2017-03-30",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
