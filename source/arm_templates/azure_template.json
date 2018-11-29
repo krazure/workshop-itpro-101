@@ -11,12 +11,8 @@
             "maxLength":128,
             "type": "securestring"
         },
-        "skuCapacity": {
-            "defaultValue":50,
-            "type": "int"
-        },
         "skuName": {
-            "defaultValue":"B_Gen5_2",
+            "defaultValue":"GP_Gen5_4",
             "type": "string"
         },
         "skuSizeMB": {
@@ -24,7 +20,7 @@
             "type": "int"
         },
         "skuTier": {
-            "defaultValue":"Basic",
+            "defaultValue":"GeneralPurpose",
             "type": "string"
         },
         "version": {
@@ -85,26 +81,26 @@
             "sku": {
                 "name": "[parameters('skuName')]",
                 "tier": "[parameters('skuTier')]",
-                "capacity": "[parameters('skuCapacity')]",
-                "family": "Gen4"
+                "family": "Gen5"
             },
             "type":"Microsoft.DBforMySQL/servers",
             "resources":[
                 {
-                    "name":"subnet_endpoint",
+                    "name":"subnetendpoint",
                     "type":"virtualNetworkRules",
                     "apiVersion":"2017-12-01",
                     "dependsOn":[  
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]",
-                        "[concat('Microsoft.Network/virtualNetworks/', variables('subnetName')]"
+                        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
                     ],
                     "location":"[resourceGroup().location]",
                     "properties":{  
-                        "virtualNetworkSubnetId": "[concat('Microsoft.Network/virtualNetworks/', variables('subnetName')]"
+                        "virtualNetworkSubnetId": "[variables('subnetRef')]",
+                        "ignoreMissingVnetServiceEndpoint": true
                     }
                 },
                 {  
-                    "name":"wpdatabase",
+                    "name":"wordpressdb",
                     "type":"databases",
                     "apiVersion":"2017-12-01",
                     "dependsOn":[  
@@ -120,7 +116,7 @@
         {
             "name": "[variables('virtualMachineName')]",
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2016-04-30-preview",
+            "apiVersion": "2017-03-30",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
@@ -184,9 +180,9 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/krazure/hands-on-lab/master/KCD2018_Docker_and_Azure/init/custom_script_for_linux/init.sh"
+                        "https://raw.githubusercontent.com/krazure/workshop-itpro-101/master/source/script/script.sh"
                     ],
-                    "commandToExecute": "[concat('sh init.sh && sed -i -e \"s/username_here/wpsqladmin@', variables('serverName'), '/\" /var/www/html/wp-config.php && sed -i -e \"s/localhost/', variables('serverName'),'.mysql.database.azure.com/\" /var/www/html/wp-config.php')]"
+                    "commandToExecute": "[concat('sh script.sh && sed -i -e \"s/username_here/wpsqladmin@', variables('serverName'), '/\" /var/www/html/wp-config.php && sed -i -e \"s/localhost/', variables('serverName'),'.mysql.database.azure.com/\" /var/www/html/wp-config.php')]"
                 }
             }
         },
@@ -205,7 +201,15 @@
                     {
                         "name": "[variables('subnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('subnetPrefix')]"
+                            "addressPrefix": "[parameters('subnetPrefix')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                }
+                            ]
                         }
                     }
                 ]
