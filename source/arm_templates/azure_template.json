@@ -51,7 +51,7 @@
         }
     },
     "variables": {
-        "serverName": "[concat(resourceGroup().name, 'mysql')]",
+        "serverName": "[toLower(concat(resourceGroup().name, 'mysql'))]",
         "virtualMachineName": "[concat(resourceGroup().name, 'vm')]",
         "virtualNetworkName": "[concat(resourceGroup().name, 'vnet')]",
         "networkInterfaceName": "[concat(resourceGroup().name, 'nic')]",
